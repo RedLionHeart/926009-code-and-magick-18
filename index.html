@@ -230,10 +230,12 @@
       </div>
     </template>
     <script>
+      "use strict";
+
       var FIREBALL_WIND_SPEED = 5;
       var FIREBALL_SPEED_AGAINST_THE_WIND = 2;
       var PROPORTIONALITY_COEFFICIENT_OF_WIZARD = 1.337;
-      var PROPORTIONALITY_COEFFICIENT_OF_HEIGHT = 2 / 3;
+      var PROPORTIONALITY_COEFFICIENT_OF_HEIGHT = 1 / 3;
 
       var fireballSize = 22;
       var wizardSpeed = 3;
@@ -250,9 +252,7 @@
       };
       var getWizardY = function(height) {
         return (
-          height -
-          height * PROPORTIONALITY_COEFFICIENT_OF_HEIGHT -
-          getWizardHeight()
+          height * PROPORTIONALITY_COEFFICIENT_OF_HEIGHT - getWizardHeight()
         );
       };
     </script>
