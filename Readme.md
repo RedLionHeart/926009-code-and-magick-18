@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Артём Сухарков](https://up.htmlacademy.ru/javascript/18/user/926009).
-* Наставник: `Неизвестно`.
+* Наставник: [Danil Shcherbakov](https://up.htmlacademy.ru/javascript/18/user/1174181).
 
 ---
 
