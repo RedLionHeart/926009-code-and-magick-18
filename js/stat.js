@@ -36,27 +36,50 @@ var getMaxNumberOfArray = function (arr) {
   return maxNumber;
 };
 var getRandomIntInclusive = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-var getRandomSaturation = function (hue, lightness) {
+var getColorWithRandomSaturation = function (hue, lightness) {
   var randomSaturationPercent = getRandomIntInclusive(0, 100);
   return (
     'hsl(' + hue + ', ' + randomSaturationPercent + '%, ' + lightness + '% )'
   );
 };
+var renderHistogramItem = function (ctx, x, y, name, width, height, color) {
+  ctx.fillStyle = name === 'Вы' ? YOU_COLOR : color;
+  ctx.fillRect(x, y, width, -height);
+};
+var renderPlayerText = function (ctx, value, x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillText(
+      value,
+      x,
+      y
+  );
+};
 
 window.renderStatistics = function (ctx, names, times) {
   ctx.fillStyle = CLOUD_SHADOW_COLOR;
-  ctx.fillRect(CLOUD_SHADOW_START_X, CLOUD_SHADOW_START_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
+  ctx.fillRect(
+      CLOUD_SHADOW_START_X,
+      CLOUD_SHADOW_START_Y,
+      CLOUD_WIDTH,
+      CLOUD_HEIGHT
+  );
   ctx.fillStyle = WHITE_COLOR;
   ctx.fillRect(CLOUD_START_X, CLOUD_START_Y, CLOUD_WIDTH, CLOUD_HEIGHT);
   ctx.font = FONT_STYLE;
   ctx.fillStyle = BLACK_TEXT_COLOR;
   ctx.textBaseline = 'hanging';
-  ctx.fillText(RESULTS_TEXT_WIN, RESULTS_DESCRIPTION_START_X, RESULTS_DESCRIPTION_START_Y);
-  ctx.fillText(RESULTS_DESCRIPTION, RESULTS_DESCRIPTION_START_X, RESULTS_DESCRIPTION_START_Y + DESCRIPTION_TEXT_GAP);
+  ctx.fillText(
+      RESULTS_TEXT_WIN,
+      RESULTS_DESCRIPTION_START_X,
+      RESULTS_DESCRIPTION_START_Y
+  );
+  ctx.fillText(
+      RESULTS_DESCRIPTION,
+      RESULTS_DESCRIPTION_START_X,
+      RESULTS_DESCRIPTION_START_Y + DESCRIPTION_TEXT_GAP
+  );
 
   var maxTimeOfItem = getMaxNumberOfArray(times);
 
@@ -66,12 +89,30 @@ window.renderStatistics = function (ctx, names, times) {
     var calculateStartHistogramItemX =
       HISTOGRAM_START_X + (HISTOGRAM_ITEM_WIDTH + HISTOGRAM_ITEM_GAP) * i;
     var roundValue = Math.round(times[i]);
-    var otherColorHistogramItem = getRandomSaturation(HUE_COLOR_OTHER_ITEMS, LIGHTNESS_COLOR_OTHER_ITEMS);
+    var otherColorHistogramItem = getColorWithRandomSaturation(
+        HUE_COLOR_OTHER_ITEMS,
+        LIGHTNESS_COLOR_OTHER_ITEMS
+    );
+    var calculateStartPlayerNameY = HISTOGRAM_START_Y - calculateHeightOfHistogramItem - TEXT_GAP * 2;
 
-    ctx.fillStyle = BLACK_TEXT_COLOR;
-    ctx.fillText(roundValue, calculateStartHistogramItemX, HISTOGRAM_START_Y - calculateHeightOfHistogramItem - TEXT_GAP * 2);
-    ctx.fillText(names[i], calculateStartHistogramItemX, NAME_START_Y);
-    ctx.fillStyle = names[i] === 'Вы' ? YOU_COLOR : otherColorHistogramItem;
-    ctx.fillRect(calculateStartHistogramItemX, HISTOGRAM_START_Y, HISTOGRAM_ITEM_WIDTH, -calculateHeightOfHistogramItem);
+    renderPlayerText(ctx,
+        roundValue,
+        calculateStartHistogramItemX,
+        calculateStartPlayerNameY,
+        BLACK_TEXT_COLOR);
+    renderPlayerText(ctx,
+        names[i],
+        calculateStartHistogramItemX,
+        NAME_START_Y,
+        BLACK_TEXT_COLOR);
+    renderHistogramItem(
+        ctx,
+        calculateStartHistogramItemX,
+        HISTOGRAM_START_Y,
+        names[i],
+        HISTOGRAM_ITEM_WIDTH,
+        calculateHeightOfHistogramItem,
+        otherColorHistogramItem
+    );
   }
 };
