@@ -84,34 +84,34 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTimeOfItem = getMaxNumberOfArray(times);
 
   for (var i = 0; i < names.length; i++) {
-    var calculateHeightOfHistogramItem =
+    var heightOfHistogramItem =
       (HISTOGRAM_HEIGHT * times[i]) / maxTimeOfItem;
-    var calculateStartHistogramItemX =
+    var startHistogramItemX =
       HISTOGRAM_START_X + (HISTOGRAM_ITEM_WIDTH + HISTOGRAM_ITEM_GAP) * i;
     var roundValue = Math.round(times[i]);
     var otherColorHistogramItem = getColorWithRandomSaturation(
         HUE_COLOR_OTHER_ITEMS,
         LIGHTNESS_COLOR_OTHER_ITEMS
     );
-    var calculateStartPlayerNameY = HISTOGRAM_START_Y - calculateHeightOfHistogramItem - TEXT_GAP * 2;
+    var startPlayerNameY = HISTOGRAM_START_Y - heightOfHistogramItem - TEXT_GAP * 2;
 
     renderPlayerText(ctx,
         roundValue,
-        calculateStartHistogramItemX,
-        calculateStartPlayerNameY,
+        startHistogramItemX,
+        startPlayerNameY,
         BLACK_TEXT_COLOR);
     renderPlayerText(ctx,
         names[i],
-        calculateStartHistogramItemX,
+        startHistogramItemX,
         NAME_START_Y,
         BLACK_TEXT_COLOR);
     renderHistogramItem(
         ctx,
-        calculateStartHistogramItemX,
+        startHistogramItemX,
         HISTOGRAM_START_Y,
         names[i],
         HISTOGRAM_ITEM_WIDTH,
-        calculateHeightOfHistogramItem,
+        heightOfHistogramItem,
         otherColorHistogramItem
     );
   }
