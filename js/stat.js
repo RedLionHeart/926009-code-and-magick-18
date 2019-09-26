@@ -36,7 +36,7 @@ var getMaxNumberOfArray = function (arr) {
   return maxNumber;
 };
 var getRandomIntInclusive = function (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 var getColorWithRandomSaturation = function (hue, lightness) {
   var randomSaturationPercent = getRandomIntInclusive(0, 100);
