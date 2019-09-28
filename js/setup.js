@@ -11,7 +11,7 @@ var NAMES = [
   'Люпита',
   'Вашингтон'
 ];
-var LASTNAMES = [
+var LAST_NAMES = [
   'да Марья',
   'Верон',
   'Мирабелла',
@@ -21,7 +21,7 @@ var LASTNAMES = [
   'Нионго',
   'Ирвинг'
 ];
-var COATCOLORS = [
+var COAT_COLORS = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -29,7 +29,7 @@ var COATCOLORS = [
   'rgb(215, 210, 55)',
   'rgb(0, 0, 0)'
 ];
-var EYESCOLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var setupElement = document.querySelector('.setup');
 var setupSimilar = document.querySelector('.setup-similar');
@@ -41,22 +41,26 @@ var visibleElement = function () {
   setupElement.classList.remove('hidden');
   setupSimilar.classList.remove('hidden');
 };
+
 var getRandomIntegerNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
 var getRandomValueFromArray = function (array) {
   return array[getRandomIntegerNumber(0, array.length - 1)];
 };
+
 var getCharacterName = function () {
-  return getRandomValueFromArray(NAMES) + ' ' + getRandomValueFromArray(LASTNAMES);
+  return getRandomValueFromArray(NAMES) + ' ' + getRandomValueFromArray(LAST_NAMES);
 };
+
 var generateArrayOfSimilarCharacters = function () {
   var characterList = [];
   for (var i = 0; i < NUMBER_OF_OBJECTS; i++) {
     var character = {
       name: getCharacterName(),
-      coatColor: getRandomValueFromArray(COATCOLORS),
-      eyesColor: getRandomValueFromArray(EYESCOLORS)
+      coatColor: getRandomValueFromArray(COAT_COLORS),
+      eyesColor: getRandomValueFromArray(EYES_COLORS)
     };
     characterList[i] = character;
   }
@@ -74,6 +78,7 @@ var getItemTemplateWizard = function (data) {
   templateItemEyesColor.style.fill = data.eyesColor;
   return templateItem;
 };
+
 var fillSimilarWizard = function (data) {
   var wizardsBlock = document.querySelector('.setup-similar-list');
   var fragment = document.createDocumentFragment();
@@ -83,6 +88,7 @@ var fillSimilarWizard = function (data) {
   }
   wizardsBlock.appendChild(fragment);
 };
+
 var init = function () {
   fillSimilarWizard(generateArrayOfSimilarCharacters());
   visibleElement();
