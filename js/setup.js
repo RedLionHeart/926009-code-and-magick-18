@@ -1,14 +1,41 @@
 'use strict';
 
 var NUMBER_OF_OBJECTS = 4;
+var NAMES = [
+  'Иван',
+  'Хуан Себастьян',
+  'Мария',
+  'Кристоф',
+  'Виктор',
+  'Юлия',
+  'Люпита',
+  'Вашингтон'
+];
+var LASTNAMES = [
+  'да Марья',
+  'Верон',
+  'Мирабелла',
+  'Вальц',
+  'Онопко',
+  'Топольницкая',
+  'Нионго',
+  'Ирвинг'
+];
+var COATCOLORS = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+var EYESCOLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var setupElement = document.querySelector('.setup');
 var setupSimilar = document.querySelector('.setup-similar');
-var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var lastNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
-var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+var similarWizardTemplate = document
+  .querySelector('#similar-wizard-template')
+  .content.querySelector('.setup-similar-item');
 
 var visibleElement = function () {
   setupElement.classList.remove('hidden');
@@ -20,16 +47,16 @@ var getRandomIntegerNumber = function (min, max) {
 var getRandomValueFromArray = function (array) {
   return array[getRandomIntegerNumber(0, array.length - 1)];
 };
-var getCharacterName = function (name, surname) {
-  return getRandomValueFromArray(name) + ' ' + getRandomValueFromArray(surname);
+var getCharacterName = function () {
+  return getRandomValueFromArray(NAMES) + ' ' + getRandomValueFromArray(LASTNAMES);
 };
 var generateArrayOfSimilarCharacters = function () {
   var characterList = [];
   for (var i = 0; i < NUMBER_OF_OBJECTS; i++) {
     var character = {
-      'name': getCharacterName(names, lastNames),
-      'coatColor': getRandomValueFromArray(coatColors),
-      'eyesColor': getRandomValueFromArray(eyesColors)
+      name: getCharacterName(),
+      coatColor: getRandomValueFromArray(COATCOLORS),
+      eyesColor: getRandomValueFromArray(EYESCOLORS)
     };
     characterList[i] = character;
   }
