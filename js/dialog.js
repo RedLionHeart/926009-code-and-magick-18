@@ -11,6 +11,7 @@
     x: window.util.setupElement.style.left,
     y: window.util.setupElement.style.top
   };
+  var formDialogWindow = window.util.setupElement.querySelector('.setup-wizard-form');
 
   // Открывает окно настройки персонажа.
   var openPopup = function () {
@@ -122,5 +123,13 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  // ddd
+  formDialogWindow.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(formDialogWindow), function (response) {
+      window.util.setupElement.classList.add('hidden');
+    });
+    evt.preventDefault();
   });
 })();
