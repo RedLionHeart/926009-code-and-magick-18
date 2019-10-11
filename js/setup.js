@@ -11,6 +11,7 @@
   ];
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var NUMBER_OF_WIZARDS = 4;
 
   var setupSimilar = document.querySelector('.setup-similar');
   var similarWizardTemplate = document
@@ -44,7 +45,7 @@
   var successHandler = function (wizards) {
     var wizardsBlock = document.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
       var wizard = getItemTemplateWizard(window.util.getRandomValueFromArray(wizards));
       fragment.appendChild(wizard);
     }

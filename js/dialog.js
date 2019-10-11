@@ -125,7 +125,7 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  // ddd
+  // Событие отправки данных мага на сервер.
   formDialogWindow.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(formDialogWindow), function () {
       window.util.setupElement.classList.add('hidden');
