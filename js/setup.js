@@ -1,26 +1,6 @@
 'use strict';
 
 (function () {
-  var NAMES = [
-    'Иван',
-    'Хуан Себастьян',
-    'Мария',
-    'Кристоф',
-    'Виктор',
-    'Юлия',
-    'Люпита',
-    'Вашингтон'
-  ];
-  var LAST_NAMES = [
-    'да Марья',
-    'Верон',
-    'Мирабелла',
-    'Вальц',
-    'Онопко',
-    'Топольницкая',
-    'Нионго',
-    'Ирвинг'
-  ];
   var COAT_COLORS = [
     'rgb(101, 137, 164)',
     'rgb(241, 43, 107)',
@@ -31,6 +11,7 @@
   ];
   var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var NUMBER_OF_WIZARDS = 4;
 
   var setupSimilar = document.querySelector('.setup-similar');
   var similarWizardTemplate = document
@@ -47,29 +28,6 @@
     setupSimilar.classList.remove('hidden');
   })();
 
-  // Генерируем название мага.
-  var getCharacterName = function () {
-    return (
-      window.util.getRandomValueFromArray(NAMES) +
-      ' ' +
-      window.util.getRandomValueFromArray(LAST_NAMES)
-    );
-  };
-
-  // Генерация данных магов.
-  var generateArrayOfSimilarCharacters = function () {
-    var characterList = [];
-    for (var i = 0; i < window.util.NUMBER_OF_OBJECTS; i++) {
-      var character = {
-        name: getCharacterName(),
-        coatColor: window.util.getRandomValueFromArray(COAT_COLORS),
-        eyesColor: window.util.getRandomValueFromArray(EYES_COLORS)
-      };
-      characterList[i] = character;
-    }
-    return characterList;
-  };
-
   // Получаем мага для блока похожих магов.
   var getItemTemplateWizard = function (data) {
     var templateItem = similarWizardTemplate.cloneNode(true);
@@ -78,21 +36,37 @@
     var templateItemEyesColor = templateItem.querySelector('.wizard-eyes');
 
     templateItemText.textContent = data.name;
-    templateItemCoatColor.style.fill = data.coatColor;
-    templateItemEyesColor.style.fill = data.eyesColor;
+    templateItemCoatColor.style.fill = data.colorCoat;
+    templateItemEyesColor.style.fill = data.colorEyes;
     return templateItem;
   };
 
-  // Добавляем магов в разметку
-  var fillSimilarWizard = function (data) {
+  // Обработчик успешной загрузки.
+  var successHandler = function (wizards) {
     var wizardsBlock = document.querySelector('.setup-similar-list');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.util.NUMBER_OF_OBJECTS; i++) {
-      var wizard = getItemTemplateWizard(data[i]);
+    for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
+      var wizard = getItemTemplateWizard(window.util.getRandomValueFromArray(wizards));
       fragment.appendChild(wizard);
     }
     wizardsBlock.appendChild(fragment);
   };
+
+  // Обработчик ошибочной загрузки.
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  // Запускаем функцию загрузки магов.
+  window.backend.load(successHandler, errorHandler);
 
   // Событие смены цвета мантии при нажатии на нее.
   wizardCoat.addEventListener('click', function () {
@@ -120,7 +94,4 @@
         'input[name="fireball-color"]'
     ).value = wizardFireballColor;
   });
-
-  // Запускаем функции.
-  fillSimilarWizard(generateArrayOfSimilarCharacters());
 })();
