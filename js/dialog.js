@@ -19,6 +19,7 @@
     document.addEventListener('keydown', onPopupEscPress);
     window.util.setupElement.style.left = dialogDefault.x;
     window.util.setupElement.style.top = dialogDefault.y;
+    window.similar.similarCharactersLoad();
   };
 
   // Закрывает окно настройки персонажа.
